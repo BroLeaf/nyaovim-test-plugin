@@ -1,0 +1,27 @@
+<!-- In first-component.html -->
+<dom-module id="hello-world">
+    <template>
+        <style>
+            #hello-world-elem {
+                position: absolute;
+                top: 100px;
+                left: 100px;
+            }
+        </style>
+        <div id="hello-world-elem">Hello, World!</div>
+    </template>
+</dom-module>
+
+<script>
+(function() {
+    const editor = document.querySelector('nyaovim-app').editor;
+const client = editor.getClient();
+    client.on('notification', function(method, args) {
+         if (method === 'hello-world:content') {
+            const elem = doument.getElementById('hello-world-elem');
+            elem.innerText = args[0];
+         }
+    });
+    client.subscribe('hello-world:content');
+})();
+</script>
